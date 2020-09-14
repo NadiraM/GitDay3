@@ -29,11 +29,12 @@ public class LoginTests {
         driver.findElement(By.id("ctl00_MainContent_username")).sendKeys( "Tester2" );
         driver.findElement(By.id("ctl00_MainContent_password")).sendKeys( "test2" + Keys.ENTER );
 
-        String errorMsg = driver.findElement(By.id("ctl00_MainContent_status")).getText();
-        Assert.assertEquals(errorMsg, "Invalid Login or Password.");
+        String errorMsg = driver.findElement ( By.id ("ctl00_MainContent_status") ).getText ();
+
+        Assert.assertEquals ( errorMsg,"Invalid Login or Password.");
 
     }
-    
+
     @Test
     public void logOutTest(){
         driver.get("http://secure.smartbearsoftware.com/samples/testcomplete12/weborders/");
@@ -41,15 +42,22 @@ public class LoginTests {
         driver.findElement(By.id("ctl00_MainContent_password")).sendKeys( "test" + Keys.ENTER );
 
         driver.findElement(By.id ( "ctl00_logout" )).click();
-        String title = driver.getTitle();
-        Assert.assertEquals ( title,"Web Orders Login");
+        Assert.assertEquals ( driver.getTitle (),"Web Orders Login");
 
-   }
+        String errorMsg = driver.findElement(By.id("ctl00_MainContent_status")).getText();
+        Assert.assertEquals(errorMsg, "Invalid Login or Password.");
+
+    }
+    
+
     
      @AfterMethod
     public void cleanUp(){
         driver.close ();
     }
+
+
+
 }
     
     
