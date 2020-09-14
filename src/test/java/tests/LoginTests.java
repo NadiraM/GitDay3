@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -27,17 +28,19 @@ public class LoginTests {
     @Test
     public void loginTest(){
         driver.get("http://secure.smartbearsoftware.com/samples/testcomplete12/weborders/");
-        this.driver.findElement(By.id("ctl00_MainContent_username")).sendKeys( "Tester" );
-        this.driver.findElement(By.id("ctl00_MainContent_password")).sendKeys( "test" + Keys.ENTER );
-        Assert.assertEquals ( driver.getTitle (),"Web Orders");
+        driver.findElement(By.id("ctl00_MainContent_username")).sendKeys( "Tester" );
+        driver.findElement(By.id("ctl00_MainContent_password")).sendKeys( "test" + Keys.ENTER );
+        String errorMsg = driver.findElement ( By.id ("ctl00_MainContent_status") ).getText ();
+
+        Assert.assertEquals ( errorMsg,"Invalid Login or Password.");
 
     }
 
     @Test
     public void logOutTest(){
         driver.get("http://secure.smartbearsoftware.com/samples/testcomplete12/weborders/");
-        this.driver.findElement(By.id("ctl00_MainContent_username")).sendKeys( "Tester" );
-        this.driver.findElement(By.id("ctl00_MainContent_password")).sendKeys( "test" + Keys.ENTER );
+        driver.findElement(By.id("ctl00_MainContent_username")).sendKeys( "Tester" );
+        driver.findElement(By.id("ctl00_MainContent_password")).sendKeys( "test" + Keys.ENTER );
 
         driver.findElement(By.id ( "ctl00_logout" )).click();
         Assert.assertEquals ( driver.getTitle (),"Web Orders Login");
